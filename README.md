@@ -3,6 +3,7 @@ Trabalho de Progamação - UENP
 
 # Descrição:
 A = Agua
+
 B = Barco
 
 Jogo entre dois usuários, cada um poderá escolher a ordem de sua matriz
