@@ -1,7 +1,7 @@
 # Batalha-Naval
 Trabalho de Progamação - UENP
 
-#Descrição:#
+# Descrição:
 A = Agua
 B = Barco
 
@@ -16,7 +16,7 @@ coluna, se caso esse valor for B o programa imprime “Afundou”, se caso não
 for B mas alguma posição ao redor for B deve imprimir “Passou perto”, senão
 deve imprimir “Errrou!”. O número de tentativas pode ser limitado.
 
-#Logica Código:#
+# Logica Código:
 
 No menu inicial, o usuário escolhe se quer jogar sozinho ou não.
 
