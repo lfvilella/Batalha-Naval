@@ -6,6 +6,8 @@
 
 // Declara funcao para n gerar erro
 void Jogo(std::string nome_do_jogador, std::string nome_do_jogador2);
+void JogoSolo(std::string nome_do_jogador);
+void PosicionaBarcosAleatorios(char tabuleiro[10][10]);
 
 void LimpaTela(){
     system("clear");
@@ -21,8 +23,8 @@ void MenuInicial(){
     while (option < 1 || option > 3){
         LimpaTela();
         printf("Welcome to Naval Battle !\n");
-        printf("1 - Play\n");
-        printf("2 - About\n");
+        printf("1 - Two Players\n");
+        printf("2 - One Player\n");
         printf("3 - Exit\n");
         printf("Press one option and type ENTER: ");
         scanf("%d", &option);
@@ -37,7 +39,9 @@ void MenuInicial(){
         Jogo(nome_do_jogador, nome_do_jogador2);
         break;
     case 2:
-        printf("About this game !\n");
+        printf("Player1: ");
+        std::cin >> nome_do_jogador;
+        JogoSolo(nome_do_jogador);
         break;
     case 3:
         printf("Game Over !\n");
@@ -161,9 +165,6 @@ void PosicionaBarcosPlayer2(char tabuleiro[10][10]){
 }
 
 void VerificaTiro(char tabuleiro[10][10], int linha_jogada, int coluna_jogada, int *pontuacao, std::string *mensagem){
-    // 00 01 02
-    // 10 11 12
-    // 20 21 22
     if (tabuleiro[linha_jogada][coluna_jogada] == 'B'){
         *pontuacao += 10;
         *mensagem = "Afundo ! (10pts)";
@@ -304,4 +305,86 @@ int main(){
     MenuInicial();
 
     return 0;
+}
+
+// ----- JOGAR SOLO -------
+
+void JogoSolo(std::string nome_do_jogador){
+    char tabuleiro[10][10];
+    char mascara[10][10];
+    int i, j;
+    int linhaJogada, colunaJogada;
+    int status_jogo = 1;
+    int pontuacao = 0;
+    int tentativas = 0, maximo_de_tentativa = 5;
+    // Mensagem de iniciacao, e no decorrer vira mensagem de feedback
+    std::string mensagem = "Bem vindo ao jogo !";
+
+    IniciaTabuleiro(tabuleiro, mascara);
+
+    // Posiciona Barcos Aleatorios
+    PosicionaBarcosAleatorios(tabuleiro);
+
+    while (tentativas < maximo_de_tentativa){
+        LimpaTela();
+        ExibeMapa();
+        ExibeTabuleiro(tabuleiro, mascara);
+
+        printf("Pontos: %d\n", pontuacao);
+        printf("Tentativas Restantes: %d\n", maximo_de_tentativa-tentativas);
+        printf("%s\n", mensagem.c_str());
+
+        // Verificando Entradas
+        linhaJogada = -1; // So para entrar no while
+        colunaJogada = -1; // So para entrar no while
+        while( (linhaJogada < 0 || linhaJogada > 9) || (colunaJogada < 0 || colunaJogada > 9) ){
+            printf("%s, Digite uma linha: \n", nome_do_jogador.c_str());
+            scanf("%d", &linhaJogada);
+            printf("%s, Digite uma coluna: \n", nome_do_jogador.c_str());
+            scanf("%d", &colunaJogada);
+        }
+
+        VerificaTiro(tabuleiro, linhaJogada, colunaJogada, &pontuacao, &mensagem); // & = Ponteiro para haver a troca de valores da variavel
+
+        // Revela a posicao jogada
+        mascara[linhaJogada][colunaJogada] = tabuleiro[linhaJogada][colunaJogada];
+
+        tentativas++;
+        // if tentativas == maximo...:
+            // break
+    }
+
+    printf("Game Over :\n");
+    printf("1 - Play Again\n");
+    printf("2 - Go to Menu\n");
+    printf("3 - Exit\n");
+    int opcao; // Opcao para continuar
+    scanf("%d", &opcao);
+    switch (opcao){
+    case 1:
+        JogoSolo(nome_do_jogador);
+        break;
+    case 2:
+        MenuInicial();
+        break;
+    }
+}
+
+void PosicionaBarcosAleatorios(char tabuleiro[10][10]){
+    // Coloca X barcos no tabuleiro, no caso 10
+    int quantidade = 10, quantidade_posicionada=0, contador=0;
+
+    while(quantidade_posicionada < quantidade){
+        int linha_aleatoria = rand() % 10;
+        int coluna_aleatoria = rand() % 10;
+
+        if (tabuleiro[linha_aleatoria][coluna_aleatoria] == 'A'){
+            // Posiciona os 10 barcos aleatorios
+            tabuleiro[linha_aleatoria][coluna_aleatoria] = 'B';
+
+            // Aumenta a quantidade para evitar barcos na mesma posicao
+            quantidade_posicionada++;
+        }
+    }
+
 }
