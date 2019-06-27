@@ -250,9 +250,14 @@ void Jogo(std::string nome_do_jogador, std::string nome_do_jogador2){
         exit(1); // Seria o Break
     }
 
+    // Pontos jogador 2
+    int pontuacao_player2 = pontuacao;
+
+
     // ------ Vez do Player 1 JOGAR ----------
     IniciaTabuleiro(tabuleiro, mascara);
     PosicionaBarcosPlayer2(tabuleiro);
+    mensagem = "Player1 is turn";
     tentativas = 0;
     pontuacao = 0;
     while (tentativas < maximo_de_tentativa){
@@ -282,6 +287,17 @@ void Jogo(std::string nome_do_jogador, std::string nome_do_jogador2){
         tentativas++;
     }
 
+    if (pontuacao > pontuacao_player2){
+        printf("Player1 Won\n");
+    }
+    else if (pontuacao_player2 > pontuacao){
+        printf("Player2 Won\n");
+    }
+    else if (pontuacao_player2 == pontuacao){
+        printf("Drew\n");
+    }
+    
+    printf("Player1 = %d | Player2 = %d\n", pontuacao, pontuacao_player2);
     printf("Game Over :\n");
     printf("1 - Play Again\n");
     printf("2 - Go to Menu\n");
