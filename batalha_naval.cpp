@@ -281,20 +281,20 @@ void Jogo(std::string nome_do_jogador, std::string nome_do_jogador2){
         tentativas++;
     }
 
-    // printf("Game Over :\n");
-    // printf("1 - Play Again\n");
-    // printf("2 - Go to Menu\n");
-    // printf("3 - Exit\n");
-    // int opcao; // Opcao para continuar
-    // scanf("%d", &opcao);
-    // switch (opcao){
-    // case 1:
-    //     Jogo(nome_do_jogador, nome_do_jogador2);
-    //     break;
-    // case 2:
-    //     MenuInicial();
-    //     break;
-    // }
+    printf("Game Over :\n");
+    printf("1 - Play Again\n");
+    printf("2 - Go to Menu\n");
+    printf("3 - Exit\n");
+    int opcao; // Opcao para continuar
+    scanf("%d", &opcao);
+    switch (opcao){
+    case 1:
+        Jogo(nome_do_jogador, nome_do_jogador2);
+        break;
+    case 2:
+        MenuInicial();
+        break;
+    }
 }
 
 int main(){
