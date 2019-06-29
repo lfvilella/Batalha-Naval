@@ -3,7 +3,7 @@ INSTALAÇÃO  DO PROJETO MAC/LINUX
 
 1- Ja criado um diretório faça o clone do projeto:
 
-    $ git clone git@github.com:luivilella/academia.git
+    $ git clone git@github.com:lfvilella/Batalha-Naval.git
 
 2 - Confira se esta na pasta com o comando:
 
