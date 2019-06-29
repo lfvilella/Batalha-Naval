@@ -1,5 +1,22 @@
 # Batalha-Naval
-Trabalho de Progamação - UENP
+INSTALAÇÃO  DO PROJETO MAC/LINUX
+
+1- Ja criado um diretório faça o clone do projeto:
+
+    $ git clone git@github.com:luivilella/academia.git
+
+2 - Confira se esta na pasta com o comando:
+
+    $ ls
+
+3 - Com o VsCode instalado rode o comando no terminal para abrir o Editor com o projeto:
+
+    $ code .
+
+4 - Rode o comando para rodar o projeto:
+
+    $ g++ -o /tmp/a.out batalha_naval.cpp && /tmp/a.out
+
 
 # Descrição:
 A = Agua
