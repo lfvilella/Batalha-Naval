@@ -35,15 +35,16 @@ void JogoSelecionandoOrdem(std::string nome_do_jogador, std::string nome_do_joga
 
 void LimpaTela(){
     system("clear");
-    // Or system("CLS");
+    // Or system("CLS"); for windows
 }
 
 void MenuInicial(){
     int option = 0;
+    // Declara String
     std::string nome_do_jogador;
     std::string nome_do_jogador2;
 
-    // Laço para opçoes validas
+    // Laço para opçoes validas para iniciar o jogo
     while (option < 1 || option > 3){
         LimpaTela();
         printf("Welcome to Naval Battle !\n");
@@ -55,29 +56,40 @@ void MenuInicial(){
         scanf("%d", &option);
     }
 
+    // Opcao escolhida pelo jogador
     switch (option){
     case 1:
         printf("Player1: ");
+        // Input do nome do jogador 1
         std::cin >> nome_do_jogador;
         printf("Player2: ");
+        // Input do nome do jogador 2
         std::cin >> nome_do_jogador2;
+        // Inicia a funçao Jogo
         Jogo(nome_do_jogador, nome_do_jogador2);
         break;
     case 2:
         printf("Player1: ");
+        // Input do nome do jogador 1
         std::cin >> nome_do_jogador;
+        // Inicia a funcao JogoSolo
         JogoSolo(nome_do_jogador);
         break;
     case 3:
         printf("Insira a Ordem do Tabuleiro:\n");
         printf("Linha: ");
+        // Input da linha
         std::cin >> LINHA_MATRIZ;
         printf("Coluna: ");
+        // Input da Coluna
         std::cin >> COLUNA_MATRIZ;
         printf("Player1: ");
+        // Input nome Jogador 1
         std::cin >> nome_do_jogador;
         printf("Player2: ");
+        // Input nome Jogador 2
         std::cin >> nome_do_jogador2;
+        // Inicia funçao JogoSlecionandoOrdem, OBS: Funciona até 10L:10C
         JogoSelecionandoOrdem(nome_do_jogador, nome_do_jogador2);
         break;
     case 4:
@@ -89,7 +101,7 @@ void MenuInicial(){
 void IniciaTabuleiro(char tabuleiro[10][10], char mascara[10][10]){
     // i = linha, j = coluna
     int i, j;
-    // Preenchendo o tabuleiro
+    // Preenchendo o tabuleiro(Agua = A) e a mascara(*) 
     for (i = 0; i < 10; i++){
         for (j = 0; j < 10; j++){
             tabuleiro[i][j] = 'A';
@@ -99,7 +111,7 @@ void IniciaTabuleiro(char tabuleiro[10][10], char mascara[10][10]){
 }
 
 void ExibeMapa(){
-    // Indicando colunas (Mapea)
+    // Indicando colunas (Mapea), Apenas desenha o numero de colunas e os " | "
     for (int cont = 0; cont < 10; cont++){
         if (cont == 0){
             printf("    ");
@@ -117,7 +129,7 @@ void ExibeMapa(){
 }
 
 void ExibeTabuleiro(char tabuleiro[10][10], char mascara[10][10]){
-
+    // Declarando Cores
     char blue[] = { 0x1b, '[', '1', ';', '3', '4', 'm', 0 };
     char green[] = { 0x1b, '[', '1', ';', '3', '2', 'm', 0 };
     char normal[] = { 0x1b, '[', '1', ';', '3', '9', 'm', 0 };
@@ -130,17 +142,20 @@ void ExibeTabuleiro(char tabuleiro[10][10], char mascara[10][10]){
         printf("%d -",i); // Mapea as linhas
         for (j = 0; j < 10; j++){
 
-            // Achei na internet, da pra colocar CORs
+            // Achei na internet, da pra colocar CORES
             switch (mascara[i][j]){
             case 'A':
+                // "Fura a mascara" e mostra ao jogador oque ele acertou Agua
                 std::cout << blue << " " << mascara[i][j] << normal;
                 break;
             
             case 'B':
+                // "Fura a mascara" e mostra ao jogador oque ele acertou Barco
                 std::cout << green << " " << mascara[i][j] << normal;
                 break;
             
             default:
+                // "Fura a mascara" e mostra ao jogador oque ele acertou Nada
                 std::cout << " " << mascara[i][j];
                 break;
             }
@@ -149,6 +164,7 @@ void ExibeTabuleiro(char tabuleiro[10][10], char mascara[10][10]){
         printf("\n");
     }
     printf("\n");
+    // ------------- //
     // Printa Tabuleiro
         // Comente esse codigo para n aparecer as repostas
     // for (i = 0; i < 10; i++){
@@ -157,12 +173,14 @@ void ExibeTabuleiro(char tabuleiro[10][10], char mascara[10][10]){
     //     }
     //     printf("\n");
     // }
+    // ------------- //
 }
 
 void PosicionaBarcos(char tabuleiro[10][10]){
-    // Coloca 10 barcos no tabuleiro
+    // Declara a quantidade de barco
     int quantidade = 5, quantidade_posicionada=0;
 
+    // Coloca 5 barcos no tabuleiro
     while(quantidade_posicionada < quantidade){
         LimpaTela();
         printf("Insira %d barcos no tabuleiro do Player1\n", quantidade-quantidade_posicionada);
@@ -181,7 +199,7 @@ void PosicionaBarcos(char tabuleiro[10][10]){
 }
 
 void PosicionaBarcosPlayer2(char tabuleiro[10][10]){
-    // Coloca 10 barcos no tabuleiro
+    // Coloca 5 barcos no tabuleiro
     int quantidade = 5, quantidade_posicionada=0;
 
     while(quantidade_posicionada < quantidade){
@@ -202,11 +220,12 @@ void PosicionaBarcosPlayer2(char tabuleiro[10][10]){
 }
 
 void VerificaTiro(char tabuleiro[10][10], int linha_jogada, int coluna_jogada, int *pontuacao, std::string *mensagem){
+    // Os '*' sao apenas ponteiros
     if (tabuleiro[linha_jogada][coluna_jogada] == 'B'){
         *pontuacao += 10;
         *mensagem = "Afundo ! (10pts)";
     }
-    // Jogou e deu Agua, Verifica se ao redor tem B
+    // Jogou e deu Agua, Verifica se ao redor tem Barco, Regra do Exercicio.
     else if (tabuleiro[linha_jogada][coluna_jogada] == 'A'){
         int verificador = 0;
         if (tabuleiro[linha_jogada+1][coluna_jogada] == 'B'){
@@ -280,14 +299,15 @@ void Jogo(std::string nome_do_jogador, std::string nome_do_jogador2){
         tentativas++;
     }
 
+    // Apenas um 'break' para visualizaçao
     int prossiga = 0;
     printf("Type 1 to continue the Game\n");
     scanf("%d", &prossiga);
     if (prossiga != 1){
-        exit(1); // Seria o Break
+        exit(1); // Seria o Break, só que n tava funcionando break entao coloquei exit
     }
 
-    // Pontos jogador 2
+    // Pontos jogador 2, para exibir o placar no final
     int pontuacao_player2 = pontuacao;
 
 
@@ -324,6 +344,7 @@ void Jogo(std::string nome_do_jogador, std::string nome_do_jogador2){
         tentativas++;
     }
 
+    // Placar:
     if (pontuacao > pontuacao_player2){
         printf("Player1 Won\n");
     }
@@ -333,7 +354,7 @@ void Jogo(std::string nome_do_jogador, std::string nome_do_jogador2){
     else if (pontuacao_player2 == pontuacao){
         printf("The Game is drew\n");
     }
-    
+    // Opcoes finais
     printf("Player1 = %d | Player2 = %d\n", pontuacao, pontuacao_player2);
     printf("Game Over :\n");
     printf("1 - Play Again\n");
@@ -538,7 +559,7 @@ void PosicionaBarcosSelecionandoOrdem(char tabuleiro[][10]){
 }
 
 void PosicionaBarcosPlayer2SelecionandoOrdem(char tabuleiro[][10]){
-    // Coloca 10 barcos no tabuleiro
+    // Coloca 5 barcos no tabuleiro
     int quantidade = 5, quantidade_posicionada=0;
 
     while(quantidade_posicionada < quantidade){
